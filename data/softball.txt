@@ -1,0 +1,15 @@
+3 Jessie Joybat 5 2 1 1
+4 Mama Snake 6 5 3 3
+10 Aurora Halal 5 3 2 2
+1 Lorem Ipsum 3 2 1 0
+4 Mama Snake 4 3 2 1
+7 Julia Shvidiani 6 5 3 2
+3 Jessie Joybat 3 2 1 0
+18 Marcus Reiter 5 4 3 1
+1 Lorem Ipsum 4 3 2 2
+7 Julia Shvidiani 4 4 3 3
+4 Mama Snake 4 3 2 1
+2 Jessie James 3 2 1 1
+10 Aurora Halal 4 4 3 2
+11 Boris Blenn 6 4 3 2
+13 Juno 8 7 5 4

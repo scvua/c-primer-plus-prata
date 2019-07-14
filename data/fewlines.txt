@@ -1,0 +1,5 @@
+This file contains 5 lines.
+Also it contains 23 words.
+
+Number of characters in this file is 139.
+File contains 102 alphabetic characters.

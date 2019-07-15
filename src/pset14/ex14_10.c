@@ -1,7 +1,7 @@
 /*
  *  pr_pset14_10.c
  *  Program that implements a menu by using an array of pointers to functions.
- *  Created by gres.cher on 07/14/19.
+ *  Created by gres.cher on 07/15/19.
  */
 
 #include <ctype.h>

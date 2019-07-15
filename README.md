@@ -1,6 +1,6 @@
 # Solutions to exercises from the "C Primer Plus" by Stephen Prata
 
-This repository contains my solutions to exercises presented in the 6th edition of [_"C Primer Plus"_](https://www.amazon.com/gp/product/0321928423/) by Stephen Prata.
+This repository contains my solutions to exercises presented in the [_C Primer Plus, 6th edition_](https://www.amazon.com/gp/product/0321928423/) by Stephen Prata.
 All solutions was compiled and tested on _macOS High Sierra (ver.10.13.6)_, _Xcode 10.1_, using the clang compiler _Apple LLVM version 10.0.0 (clang-1000.11.45.5)_.
 
 
@@ -47,3 +47,11 @@ Text files are provided to support manually testing the exercises.
 * __flight.dat__: the database for the first Colossus Airlines flight (*ex14_08*).
 * __persons.dat__: is used by `persons.c` (feed the address to the file as a command-line argument).
 * __softball.txt__: the softball team statistics, for use with the *ex14_06*.
+
+
+### License
+
+These solutions are copyright under the terms of the MIT LICENSE (see [LICENSE](LICENSE.md)) with the following exceptions:
+
+* The source code of this project is directly the answers for the exercises from the book C Primer Plus, 6th edition by Stephen Prata (2014).
+* The text of most of the opening comments of the solutions, which contain the exercise conditions, can partially or completely recite the corresponding fragments of the book with the original exercise conditions. Therefore, before-mentioned fragments of comments fall under the influence of the publisher's copyright.

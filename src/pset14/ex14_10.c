@@ -101,8 +101,7 @@ char showmenu(void)
         for (int i = 0; i < msize; i++)
             printf("%c%s", labels[i], i + 1 != msize ? ", " : ">:\n");
         // Get new answer
-        ans = getfirst();
-        ans = tolower(ans);
+        ans = tolower(getfirst());
     }
     return ans;
 }

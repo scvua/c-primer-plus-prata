@@ -18,7 +18,8 @@ All solutions was compiled and tested on _macOS High Sierra (ver.10.13.6)_, _Xco
 * [12. Storage Classes, Linkage, and Memory Management](src/pset12/)
 * [13. File Input/Output](src/pset13/)
 * [14. Structures and Other Data Forms](src/pset14/)
-* Exercises to chapters 14 - 17 are in the process
+* [15. Bit Fiddling](src/pset15/)
+^ **Note**: Exercises to chapters 15 - 17 are in the process
 
 
 ### Extras

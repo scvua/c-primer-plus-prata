@@ -51,7 +51,6 @@ Text files are provided to support manually testing the exercises.
 
 ### License
 
-These solutions are copyright under the terms of the MIT LICENSE (see [LICENSE](LICENSE.md)) with the following exceptions:
+These solutions are copyright under the terms of the MIT LICENSE (see [LICENSE](LICENSE.md)) with the following exception:
 
-* The source code of this project is directly the answers for the exercises from the book C Primer Plus, 6th edition by Stephen Prata (2014).
-* The text of most of the opening comments of the solutions, which contain the exercise conditions, can partially or completely recite the corresponding fragments of the book with the original exercise conditions. Therefore, before-mentioned fragments of comments fall under the influence of the publisher's copyright.
+* The source code of this project is directly the answers for the exercises presented in the book "C Primer Plus, 6th edition" by Stephen Prata (2014). The text of most of the opening comments of the solutions, which contain the exercise conditions, can partially or completely recite the corresponding fragments of the book with the original exercise conditions. Therefore, before-mentioned fragments of comments fall under the influence of the publisher's copyright.

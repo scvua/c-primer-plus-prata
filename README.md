@@ -19,7 +19,7 @@ All solutions was compiled and tested on _macOS High Sierra (ver.10.13.6)_, _Xco
 * [13. File Input/Output](src/pset13/)
 * [14. Structures and Other Data Forms](src/pset14/)
 * [15. Bit Fiddling](src/pset15/)
-^ **Note**: Exercises to chapters 15 - 17 are in the process
+* __Note__: Exercises to chapters 15 - 17 are in the process
 
 
 ### Extras

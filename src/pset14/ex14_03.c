@@ -20,7 +20,7 @@ struct book {           // set up book template
 };
 
 void printbook(struct book * pst[], int lim);
-char * mygets(char *restrict st, const int n);
+char * mygets(char * st, const int n);
 void sort_title(struct book * pst[], int lim);
 void sort_value(struct book * pst[], int lim);
 
@@ -30,7 +30,7 @@ int main(void)
     struct book library[MAXBKS]; // array of book structures
     struct book * plib[MAXBKS];  // array of pointers to structures of book type
     int count = 0;
-    
+
     printf("Please enter the book title.\n");
     printf("Press [return] at the start of a line to stop.\n");
     while (count < MAXBKS && mygets(library[count].title, MAXTITL) != NULL
@@ -47,7 +47,7 @@ int main(void)
         if (count < MAXBKS)
             printf("Enter the next title.\n");
     }
-    
+
     if (count > 0)
     {
         // Print the book descriptions in the order entered
@@ -64,7 +64,7 @@ int main(void)
     }
     else
         printf("No books? Too bad.\n");
-    
+
     return 0;
 }
 
@@ -77,11 +77,11 @@ void printbook(struct book * pst[], int lim)
 }
 
 // Get a string from standard input
-char * mygets(char *restrict st, const int n)
+char * mygets(char * st, const int n)
 {
     int ch, i;
-    
-    for (i=0, ch=0; (i < n-1) && ((ch=getc(stdin)) != EOF) && (ch != '\n'); i++)
+
+    for (i=0, ch=0; (i < n-1) && ((ch=getchar()) != EOF) && (ch != '\n'); i++)
         st[i] = ch;
     st[i] = '\0';
     if (ch != EOF && ch != '\n')
@@ -98,7 +98,7 @@ void sort_title(struct book * pst[], int lim)
 {
     int top, seek;
     struct book * temp;
-    
+
     for (top = 0; top < lim; top++)
         for (seek = top + 1; seek < lim; seek++)
             if (strcmp(pst[top]->title, pst[seek]->title) > 0)
@@ -114,7 +114,7 @@ void sort_value(struct book * pst[], int lim)
 {
     int top, seek;
     struct book * temp;
-    
+
     for (top = 0; top < lim; top++)
         for (seek = top + 1; seek < lim; seek++)
             if (pst[top]->value > pst[seek]->value)

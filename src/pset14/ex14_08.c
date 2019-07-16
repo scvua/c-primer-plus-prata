@@ -60,7 +60,7 @@ void list_flight(struct seat * pst[], const int lim);
 void srtlname(struct seat *pst[], const int lim);
 void assign_set(struct seat * pst, const int lim);
 void assign_del(struct seat * pst, const int lim);
-char * mygets(char *restrict st, const int n);
+char * mygets(char * st, const int n);
 
 int main(void)
 {
@@ -69,7 +69,7 @@ int main(void)
     FILE *fp;
     size_t size = sizeof(struct seat);
     char choice;
-    
+
     // Open the datafile; if it's absent, initialize new structure
     if ((fp = fopen(FILE_ADDR, "r")) != NULL)
     {
@@ -91,7 +91,7 @@ int main(void)
 
     for (int i = 0; i < SEATS; i++)
         pst[i] = &flight[i];
-    
+
     while ((choice = getmenu("neladq")) != 'q')
     {
         switch (choice)
@@ -100,23 +100,23 @@ int main(void)
                 printf("The number of empty seats: %d\n",
                        empties(flight, SEATS));
                 break;
-                
+
             case 'e':   // show list of empty seats
                 list_seats(flight, SEATS, EMPTY);
                 break;
-                
+
             case 'l':   // show alphabetical list of seats (by last name)
                 srtlname(pst, SEATS);
                 list_flight(pst, SEATS);
                 break;
-                
+
             case 'a':   // assign a customer to a seat
                 if (empties(flight, SEATS) != 0)
                     assign_set(flight, SEATS);
                 else
                     printf("All seats are taken\n");
                 break;
-                
+
             case 'd':   // delete a seat assignment
                 if (empties(flight, SEATS) != SEATS)
                     assign_del(flight, SEATS);
@@ -125,7 +125,7 @@ int main(void)
                 break;
         }
     }
-    
+
     // Save data into file
     if ((fp = fopen(FILE_ADDR, "w")) != NULL)
     {
@@ -136,7 +136,7 @@ int main(void)
     else
         fprintf(stderr, "Can't save the data :(\n");
     puts("Bye.");
-    
+
     return 0;
 }
 
@@ -158,11 +158,11 @@ char getmenu(const char * label)
         "Delete a seat assignment",
         "Quit"
     };
-    
+
     puts("To choose a function, enter its letter label:");
     for (int i = 0; i < MENU_SIZE; i++)
         printf("%c) %s\n", label[i], line[i]);
-    
+
     return getchoice(label);
 }
 
@@ -171,7 +171,7 @@ char getmenu(const char * label)
 char getchoice(const char * labels)
 {
     char ans;
-    
+
     while ((ans = getchar()) != EOF)
     {
         // Dismiss a forehead whitespaces if any
@@ -204,7 +204,7 @@ void retry(const char * labels)
 int empties(const struct seat * pst, int lim)
 {
     int sum = 0;
-    
+
     for (int i = 0; i < lim; i++)
         if (pst[i].status == EMPTY)
             sum++;
@@ -245,7 +245,7 @@ void list_flight(struct seat * pst[], const int lim)
 void srtlname(struct seat * pst[], const int lim)
 {
     struct seat * tmp;
-    
+
     for (int top = 0; top < lim; top++)
         for (int seek = top + 1; seek < lim; seek++)
             if (strcmp(pst[top]->lname, pst[seek]->lname) > 0)
@@ -262,7 +262,7 @@ void assign_set(struct seat * pst, const int lim)
     struct seat tmp = { .status = TAKEN };
     int id;
     char choice;
-    
+
     // Prompt the user for the number of a seat
     printf("List of available seats:\n");
     list_seats(pst, SEATS, EMPTY);
@@ -275,7 +275,7 @@ void assign_set(struct seat * pst, const int lim)
     }
     eatline();
     tmp.seat_id = id;
-    
+
     // Check whether the seat is taken; if so suggest to reassign
     if (pst[id-1].status == TAKEN)
     {
@@ -285,7 +285,7 @@ void assign_set(struct seat * pst, const int lim)
         if ((choice = getchoice("ra")) == 'a')
             return;
     }
-    
+
     // Save names to the temporary structure and prompt for next action
     do
     {
@@ -308,7 +308,7 @@ void assign_del(struct seat * pst, const int lim)
 {
     int id;
     char choice;
-    
+
     // Print full list of taken seats
     printf("List of taken seats:\n");
     for (int i = 0; i < lim; i++)
@@ -341,15 +341,16 @@ void assign_del(struct seat * pst, const int lim)
 }
 
 // Get a string from standard input
-char * mygets(char *restrict st, const int n)
+char * mygets(char * st, const int n)
 {
     int ch, i;
-    
+
     for (i=ch=0; (i < n-1) && ((ch=getchar()) != EOF) && (ch != '\n'); i++)
         st[i] = ch;
     st[i] = '\0';
     if (ch != EOF && ch != '\n')
-        eatline();
+        while (getchar() != '\n')
+            continue;
     if (i > 0)
         return st;
     else

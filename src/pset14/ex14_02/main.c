@@ -18,7 +18,7 @@ int main(void)
     int day, month, year;
     int daystot;
     extern struct month months[12];
-    
+
     printf("Enter the year (q to quit): ");
     while ((scanf("%d", &year)) == 1)
     {
@@ -63,6 +63,6 @@ int main(void)
         printf("Enter the year (q to quit): ");
     }
     puts("Done.");
-    
+
     return 0;
 }

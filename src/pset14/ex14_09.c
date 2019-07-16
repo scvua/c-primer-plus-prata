@@ -60,12 +60,12 @@ void listSeats(const struct seat * pst, const int lim, enum seats n);
 void menuFlight(const int num, const int seats);
 char menuSeats(const char * st);
 void srtLName(struct seat *pst[], const int lim);
-char * mygets(char *restrict st, const int n);
+char * mygets(char * st, const int n);
 
 int main(void)
 {
     int choice;
-    
+
     puts("Colossus Airlaines");
     while ((choice = getFlightNum()) != 0)
         menuFlight(choice, SEATS);
@@ -78,7 +78,7 @@ void assignDel(struct seat * pst, const int lim)
 {
     int id;
     char choice;
-    
+
     // Print full list of taken seats
     printf("List of taken seats:\n");
     for (int i = 0; i < lim; i++)
@@ -116,7 +116,7 @@ void assignSet(struct seat * pst, const int lim)
     struct seat tmp = { .status = taken };
     int id;
     char choice;
-    
+
     // Prompt the user for the number of a seat
     printf("List of available seats:\n");
     listSeats(pst, SEATS, empty);
@@ -129,7 +129,7 @@ void assignSet(struct seat * pst, const int lim)
     }
     eatLine();
     tmp.seat_id = id;
-    
+
     // Check whether the seat is taken; if so suggest to reassign
     if (pst[id-1].status == taken)
     {
@@ -139,7 +139,7 @@ void assignSet(struct seat * pst, const int lim)
         if ((choice = choiceGet("ra")) == 'a')
             return;
     }
-    
+
     // Save names to the temporary structure and prompt for next action
     do
     {
@@ -165,7 +165,7 @@ void assignSet(struct seat * pst, const int lim)
 char choiceGet(const char * labels)
 {
     char ans;
-    
+
     while ((ans = getchar()) != EOF)
     {
         // Dismiss a forehead whitespaces if any
@@ -199,7 +199,7 @@ void confirmSet(struct seat * pst, const int lim)
 {
     int id;
     char choice;
-    
+
     puts("List of assigned seats:");
     listSeats(pst, lim, taken);
     printf("Which seat to confirm?: ");
@@ -215,11 +215,11 @@ void confirmSet(struct seat * pst, const int lim)
         case empty:
             printf("Seat %d is empty\n", id);
             break;
-            
+
         case confirmed:
             printf("Seat %d is already confirmed\n", id);
             break;
-            
+
         case taken:
             printf("Seat %d: %s %s is going to be confirmed\n", id,
                    pst[id-1].fname, pst[id-1].lname);
@@ -259,7 +259,7 @@ int getFlightNum(void)
     extern const int flight_num[FLIGHTS];
     int choice = 0;
     int i;
-    
+
     puts("List of available flights:");
     for (i = 0; i < FLIGHTS; i++)
         printf("%4d%s", flight_num[i], i+1 != FLIGHTS ? " " : "\n");
@@ -311,10 +311,10 @@ void menuFlight(const int flight_num, const int seats_num)
     FILE *fp;
     size_t size = sizeof(struct seat);
     char choice;
-    
+
     // Generate filename
     sprintf(file_addr, "%sflight_%03d.dat", DB_DIR, flight_num);
-    
+
     // Open the datafile; if it's absent, initialize new structure
     if ((fp = fopen(file_addr, "r")) != NULL)
     {
@@ -333,7 +333,7 @@ void menuFlight(const int flight_num, const int seats_num)
             flight[i].status = empty;
         }
     }
-    
+
     for (int i = 0; i < seats_num; i++)
         pst[i] = &flight[i];
     printf("FLIGHT %d\n", flight_num);
@@ -346,23 +346,23 @@ void menuFlight(const int flight_num, const int seats_num)
                 printf("The number of empty seats: %d of %d\n",
                        countSeats(flight, seats_num, empty), seats_num);
                 break;
-                
+
             case 'e':	// show list of empty seats
                 listSeats(flight, seats_num, empty);
                 break;
-                
+
             case 'l':	// show alphabetical list of seats (by last name)
                 srtLName(pst, seats_num);
                 listFlight(pst, seats_num);
                 break;
-                
+
             case 'a':	// assign a customer to a seat
                 if (countSeats(flight, seats_num, empty) != 0)
                     assignSet(flight, seats_num);
                 else
                     printf("All seats are taken\n");
                 break;
-                
+
             case 'c':   // confirm a seat assignment
                 if (countSeats(flight, seats_num, empty) != 0)
                 {
@@ -374,7 +374,7 @@ void menuFlight(const int flight_num, const int seats_num)
                 else
                     printf("There's nothing to confirm\n");
                 break;
-                
+
             case 'd':	// delete a seat assignment
                 if (countSeats(flight, seats_num, taken) != 0)
                     assignDel(flight, seats_num);
@@ -414,14 +414,14 @@ void listSeats(const struct seat * pst, const int lim, enum seats status)
             case empty:
                 puts("All seats are taken");
                 break;
-                
+
             case taken:
                 if (countSeats(pst, lim, empty) == lim)
                     puts("All seats are empty");
                 else
                     puts("All of the seat assignments are confirmed");
                 break;
-                
+
             case confirmed:
                 if (countSeats(pst, lim, empty) == lim)
                     puts("All seats are empty");
@@ -436,7 +436,7 @@ void listSeats(const struct seat * pst, const int lim, enum seats status)
 char menuSeats(const char * label)
 {
     const int msize = 7;
-    
+
     char * line[msize] = {
         "Show number of empty seats",
         "Show list of empty seats",
@@ -446,11 +446,11 @@ char menuSeats(const char * label)
         "Delete a seat assignment",
         "Return to the previous menu"
     };
-    
+
     puts("To choose a function, enter its letter label:");
     for (int i = 0; i < msize; i++)
         printf("%c) %s\n", label[i], line[i]);
-    
+
     return choiceGet(label);
 }
 
@@ -458,7 +458,7 @@ char menuSeats(const char * label)
 void srtLName(struct seat * pst[], const int lim)
 {
     struct seat * tmp;
-    
+
     for (int top = 0; top < lim; top++)
         for (int seek = top + 1; seek < lim; seek++)
             if (strcmp(pst[top]->lname, pst[seek]->lname) > 0)
@@ -470,15 +470,16 @@ void srtLName(struct seat * pst[], const int lim)
 }
 
 // Get a string from standard input
-char * mygets(char *restrict st, const int n)
+char * mygets(char * st, const int n)
 {
     int ch, i;
-    
+
     for (i=ch=0; (i < n-1) && ((ch=getchar()) != EOF) && (ch != '\n'); i++)
         st[i] = ch;
     st[i] = '\0';
     if (ch != EOF && ch != '\n')
-        eatLine();
+        while (getchar() != '\n')
+            continue;
     if (i > 0)
         return st;
     else

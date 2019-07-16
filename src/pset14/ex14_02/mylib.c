@@ -31,7 +31,7 @@ int check_month(const char * st)
     int mon;
     unsigned int slen;
     char temp[SIZE];
-    
+
     // Check whether a string contains whitespace in beforehand; omit it
     while (*st != '\0' && isspace(*st))
         st++;
@@ -81,11 +81,11 @@ void eatline(void)
         continue;
 }
 
-char * mygets(char * st, int n)
+char * mygets(char * st, const int n)
 {
     int ch, i;
-    
-    for (i=0, ch=0; (i < n-1) && ((ch=getc(stdin)) != EOF) && (ch != '\n'); i++)
+
+    for (i=0, ch=0; (i < n-1) && ((ch=getchar()) != EOF) && (ch != '\n'); i++)
         st[i] = ch;
     st[i] = '\0';
     if (ch != EOF && ch != '\n')

@@ -32,21 +32,21 @@ struct book {                   /* set up book template    */
 void eatline(void);
 void recedit(struct book *);
 void retry(char * key);
-char * mygets(char *restrict st, const int n);
+char * mygets(char * st, const int n);
 char getchoice(char * key);
 
 int main(void)
 {
     struct book library[MAXBKS]; // array of structures
-    
+
     int count = 0;
     int index;
     FILE *pbooks;
     int size = sizeof (struct book);
-    
+
     char choice;                 // user choice of action to apply to the record
     bool is_changed = false;     // flag that checked if any record is changed
-    
+
     // Try to open file with records
     if ((pbooks = fopen(FADDR, "r+b")) == NULL)
     {
@@ -57,7 +57,7 @@ int main(void)
             exit(1);
         }
     }
-    
+
     rewind(pbooks);            /* go to start of file      */
     while (count < MAXBKS && fread(&library[count], size, 1, pbooks) == 1)
     {
@@ -75,12 +75,12 @@ int main(void)
                 --count;
                 is_changed = true;
                 break;
-                
+
             case 'E':
                 recedit(&library[count]);
                 is_changed = true;
                 break;
-                
+
             case 'N':
                 break;
         }
@@ -91,7 +91,7 @@ int main(void)
         fputs("The book.dat file is full.\n", stderr);
         exit(2);
     }
-    
+
     puts("Please add new book titles.");
     puts("Press [enter] at the start of a line to stop.");
     while (count < MAXBKS && mygets(library[count].title, MAXTITL) != NULL
@@ -106,7 +106,7 @@ int main(void)
         if (count < MAXBKS)
             puts("Enter the next title.");
     }
-    
+
     if (count > 0)
     {
         puts("Here is the list of your books:");
@@ -134,10 +134,10 @@ int main(void)
     }
     else
         puts("No books? Too bad.\n");
-    
+
     puts("Bye.\n");
     fclose(pbooks);
-    
+
     return 0;
 }
 
@@ -164,7 +164,7 @@ void recedit(struct book * pst)
 void retry(char * key)
 {
     bool is_last;
-    
+
     printf("Please use");
     for (int i = 0; key[i] != '\0'; i++)
     {
@@ -179,11 +179,11 @@ void retry(char * key)
 }
 
 // Get a string from standard input
-char * mygets(char *restrict st, const int n)
+char * mygets(char * st, const int n)
 {
     int ch, i;
-    
-    for (i=0, ch=0; (i < n-1) && ((ch=getc(stdin)) != EOF) && (ch != '\n'); i++)
+
+    for (i=0, ch=0; (i < n-1) && ((ch=getchar()) != EOF) && (ch != '\n'); i++)
         st[i] = ch;
     st[i] = '\0';
     if (ch != EOF && ch != '\n')
@@ -200,7 +200,7 @@ char * mygets(char *restrict st, const int n)
 char getchoice(char *key)
 {
     char ans;
-    
+
     while ((ans = getchar()) != EOF)
     {
         // Dismiss a forehead whitespaces if any

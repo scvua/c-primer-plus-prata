@@ -39,7 +39,7 @@ struct month months[12] = {
 
 int check_month(const char * s);
 void eatline(void);
-char * mygets(char *restrict st, const int n);
+char * mygets(char * st, const int n);
 void strconv(char * out, const char * in);
 
 int main(void)
@@ -47,7 +47,7 @@ int main(void)
     char input[SIZE];
     int day, month, year;
     int daystot;
-    
+
     printf("Enter the year (q to quit): ");
     while ((scanf("%d", &year)) == 1)
     {
@@ -92,7 +92,7 @@ int main(void)
         printf("Enter the year (q to quit): ");
     }
     puts("Done.");
-    
+
     return 0;
 }
 
@@ -103,7 +103,7 @@ int check_month(const char * st)
     int mon;
     unsigned int slen;
     char temp[SIZE];
-    
+
     // Check whether a string contains whitespace in beforehand; omit it
     while (*st != '\0' && isspace(*st))
         st++;
@@ -155,11 +155,11 @@ void eatline(void)
 }
 
 // Get a string from standard input
-char * mygets(char *restrict st, const int n)
+char * mygets(char * st, const int n)
 {
     int ch, i;
-    
-    for (i=0, ch=0; (i < n-1) && ((ch=getc(stdin)) != EOF) && (ch != '\n'); i++)
+
+    for (i=0, ch=0; (i < n-1) && ((ch=getchar()) != EOF) && (ch != '\n'); i++)
         st[i] = ch;
     st[i] = '\0';
     if (ch != EOF && ch != '\n')

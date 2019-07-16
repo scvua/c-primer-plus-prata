@@ -33,14 +33,14 @@ struct month months[12] = {
 
 int daysCalc(const struct month * pst, const char * s);
 void s_convert(char * t, const char * s);
-char * mygets(char *restrict st, const int n);
+char * mygets(char * st, const int n);
 
 int main(void)
 {
     char input[SIZE];
     char test[SIZE];
     int days;
-    
+
     puts("Enter a name of the month:");
     while (mygets(input, SIZE) != NULL && input[0] != '\0')
     {
@@ -52,7 +52,7 @@ int main(void)
         puts("Enter next name ([enter] to quit):");
     }
     puts("Done.");
-    
+
     return 0;
 }
 // Calculate total days in the year up to st month
@@ -88,11 +88,11 @@ void s_convert(char * out, const char * in)
 }
 
 // Get a string from standard input
-char * mygets(char *restrict st, const int n)
+char * mygets(char * st, const int n)
 {
     int ch, i;
-    
-    for (i=0, ch=0; (i < n-1) && ((ch=getc(stdin)) != EOF) && (ch != '\n'); i++)
+
+    for (i=0, ch=0; (i < n-1) && ((ch=getchar()) != EOF) && (ch != '\n'); i++)
         st[i] = ch;
     st[i] = '\0';
     if (ch != EOF && ch != '\n')

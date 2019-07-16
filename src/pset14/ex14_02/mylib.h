@@ -22,7 +22,7 @@ int check_month(const char * s);
 void eatline(void);
 
 // Get a string from standard input
-char * mygets(char * st, int n);
+char * mygets(char * st, const int n);
 
 // Convert string in lowercase; make first letter capital
 void strconv(char * out, const char * in);

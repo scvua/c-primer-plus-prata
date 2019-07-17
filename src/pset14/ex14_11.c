@@ -78,7 +78,7 @@ void printar(double ar[], const int size, const int width)
     putchar('\n');
 }
 
-// Returns square of the initial value
+// Returns inverse value of the number
 double inverse(double d)
 {
     return (1.0 / d);

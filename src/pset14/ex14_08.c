@@ -181,7 +181,7 @@ char getchoice(const char * labels)
                 retry(labels);
             continue;
         }
-        // Convert to upper and check if answer matches
+        // Convert to lowercase and check if answer matches
         ans = tolower(ans);
         eatline();
         if (strchr(labels, ans))

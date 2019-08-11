@@ -55,8 +55,9 @@ void print_bin(const unsigned int num)
 // Rotates the bits of an unsigned int by a specified number of bits to the left
 unsigned int rbits(unsigned int num, short nbits)
 {
-    unsigned int mask = 0x1 << (CHAR_BIT * sizeof(int) - 1);
+    unsigned int mask = 0x1 << (CHAR_BIT * sizeof(unsigned int) - 1);
 
+    num = num % (CHAR_BIT * sizeof(unsigned int));
     while (nbits--)
     {
         if ((num & mask) == mask)

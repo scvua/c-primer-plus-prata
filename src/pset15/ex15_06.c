@@ -62,6 +62,7 @@ int main(void)
     struct font_param font = {1, 12, left, off, off, off};
     char choice = 0;
 
+    print_status(&font);
     print_menu(name_mainmenu, label_mainmenu, MENU_COLS);
     while ((choice = getchoice(label_mainmenu)) != 'q' && choice != EOF)
     {

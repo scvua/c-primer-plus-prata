@@ -17,8 +17,8 @@
 #include <string.h>
 
 #define MENU_COLS     3
-#define FONT_ID_MAX   255
-#define FONT_SIZE_MAX 127
+#define FONT_ID_MAX   0xFF  // 255 in decimal
+#define FONT_SIZE_MAX 0x7F  // 127 in decimal
 
 enum alignid {left, center, right};
 enum stateid {off, on};
@@ -43,13 +43,10 @@ const char * state[] = {"off", "on"};
 struct font_param {
     unsigned int id         : 8;
     unsigned int size       : 7;
-    unsigned int            : 1;
     unsigned int align      : 2;
-    unsigned int            : 2;
-    unsigned int is_bold    : 1;
-    unsigned int is_italic  : 1;
-    unsigned int is_unline  : 1;
-    unsigned int            : 1;
+    unsigned int bold       : 1;
+    unsigned int italic     : 1;
+    unsigned int underline  : 1;
 };
 
 // Functions
@@ -86,15 +83,15 @@ int main(void)
                 break;
 
             case 'b':   // toggle bold
-                font.is_bold = ~(font.is_bold);
+                font.bold = ~(font.bold);
                 break;
 
             case 'i':   // toggle italic
-                font.is_italic = ~(font.is_italic);
+                font.italic = ~(font.italic);
                 break;
 
             case 'u':   // toggle underline
-                font.is_unline = ~(font.is_unline);
+                font.underline = ~(font.underline);
                 break;
         }
         print_status(&font);
@@ -171,8 +168,8 @@ void print_status(const struct font_param * font)
 
     printf("  ID SIZE ALIGNMENT  B   I   U\n");
     printf(" %3d  %3d  %6s   %3s %3s %3s\n",
-           font->id, font->size, name_align[font->align], state[font->is_bold],
-           state[font->is_italic], state[font->is_unline]);
+           font->id, font->size, name_align[font->align], state[font->bold],
+           state[font->italic], state[font->underline]);
 }
 
 // Scan parameter value and convert it to the specified range by the `lim` mask

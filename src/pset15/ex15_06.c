@@ -178,7 +178,10 @@ unsigned int scan_param(const int lim)
 {
     int num;
     while (scanf("%d", &num) != 1)
+    {
         printf("Retry with integer (0-%d): ", lim);
+        eatline();
+    }
     eatline();
     num &= lim;
     return (unsigned int) num;

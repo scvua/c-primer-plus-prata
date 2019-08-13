@@ -54,6 +54,7 @@ const char * name_mainmenu[] = {
 // Functions
 void eatline(void);
 char getchoice(const char *);
+unsigned short getnum(const unsigned short maxnum);
 void print_menu(const char * name[], const char * labs, const int cols);
 void print_retry(const char *);
 void print_status(const font_p *);
@@ -75,7 +76,9 @@ int main(void)
     font &= (~STYLE_MASK);       // All of the style parameters are toggle off
 
     do
+    {
         answer = user_prompt(&font);
+    }
     while (set_props(&font, answer));
 
     return 0;
@@ -111,6 +114,20 @@ char getchoice(const char * labels)
             print_retry(labels);
     }
     return ch;
+}
+
+// Get the short int and convert it to the specified range by the `maxnum` mask
+unsigned short getnum(const unsigned short maxnum)
+{
+    unsigned short num;
+    while (scanf("%hu", &num) != 1)
+    {
+        printf("Retry with integer (0-%d): ", maxnum);
+        eatline();
+    }
+    eatline();
+    num &= maxnum;
+    return num;
 }
 
 // Print menu with item names and corresponding letter labels
@@ -183,10 +200,7 @@ bool set_fontid(font_p * pf)
     const static unsigned short maxnum = ID_MASK;
 
     printf("Enter font id(0-%d): ", maxnum);
-    while (scanf("%hu", &num) != 1)
-        printf("Retry with integer (0-%d): ", maxnum);
-    eatline();
-    num &= maxnum;
+    num = getnum(maxnum);
     *pf &= (~ID_MASK);
     *pf |= num;
     return true;
@@ -198,10 +212,7 @@ bool set_fontsize(font_p * pf)
     const static unsigned short maxnum = (SIZE_MASK >> SIZE_SHIFT);
 
     printf("Enter font size(0-%d): ", maxnum);
-    while (scanf("%hu", &num) != 1)
-        printf("Retry with integer (0-%d): ", maxnum);
-    eatline();
-    num &= maxnum;
+    num = getnum(maxnum);
     *pf &= (~SIZE_MASK);
     *pf |= (num << SIZE_SHIFT);
     return true;

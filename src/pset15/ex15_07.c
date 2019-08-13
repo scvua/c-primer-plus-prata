@@ -70,10 +70,7 @@ int main(void)
     char answer;
 
     // Initialize bits of the font
-    font = 0x1;                  // Font ID is 1
-    font |= (0xC << SIZE_SHIFT); // Font's size is 12
-    font &= (~ALIGN_MASK);       // Alignment is set to the "left" value (0)
-    font &= (~STYLE_MASK);       // All of the style parameters are toggle off
+    font = 0x1 | (0xC << SIZE_SHIFT);   // Font's ID = 1; font's size = 12
 
     do
     {

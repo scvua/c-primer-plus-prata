@@ -25,7 +25,7 @@ int main(void)
         int * ar;
         int npicks;
 
-        ar = calloc(size, sizeof(int));
+        ar = (int *) calloc(size, sizeof(int));
         for (int i = 0; i < size; i++)
             ar[i] = i + 1;
         printf("Enter amount of the elements to peak;\n(1-%d): ", size);
@@ -54,7 +54,7 @@ void randpick(const int * ar, const int size, int npicks)
         first_fcall = false;
     }
     // Allocate the array with the element statuses; initialized with all zeros
-    is_picked = calloc(size, sizeof(bool));
+    is_picked = (bool *) calloc(size, sizeof(bool));
     for (int i = 0, pick; i < npicks; i++)
     {
         do

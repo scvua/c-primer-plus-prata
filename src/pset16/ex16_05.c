@@ -55,10 +55,10 @@ void randpick(const int * ar, const int size, int npicks)
     }
     // Allocate the array with the element statuses; initialized with all zeros
     is_picked = (bool *) calloc(size, sizeof(bool));
-    for (int i = 0, pick; i < npicks; i++)
+    for (unsigned int i = 0, pick; i < npicks; i++)
     {
         do
-            pick = rand() % size;
+            pick = (unsigned int) rand() % size;
         while (is_picked[pick]);
         printf("%d ", ar[pick]);
         is_picked[pick] = true;

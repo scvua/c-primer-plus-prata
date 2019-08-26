@@ -25,12 +25,14 @@ int main(void)
 {
     names_t staff[SIZE] = {
         {"Alice", "Shvidiani"},
+        {"Fay", "Marvin"},
         {"Diane", "Selvin"},
         {"Camilla", "Rhodes"},
+        {"Leo", "Marvin"},
         {"Boris", "Chuprynka"},
-        {"Max", "Smith"},
         {"Vladimir", "Smith"},
         {"Jean", "Holloway"},
+        {"Will", "Bloom"},
         {"Diane", "Hart"},
         {"Allison", "Adams"},
         {"Jeffrey", "Beaumont"},
@@ -38,17 +40,15 @@ int main(void)
         {"Frank", "Booth"},
         {"Sandy", "Williams"},
         {"Alice", "Howland"},
+        {"Max", "Smith"},
         {"Julie", "Baker"},
         {"Francois", "Ferrand"},
         {"Maya", "Deren"},
         {"Ed", "Bloom"},
-        {"Will", "Bloom"},
         {"James", "Cole"},
-        {"Bob", "Wiley"},
-        {"Leo", "Marvin"},
-        {"Fay", "Marvin"},
-        {"Siggy", "Marvin"},
         {"Phil", "Groundhogday"},
+        {"Bob", "Wiley"},
+        {"Siggy", "Marvin"},
     };
 
     puts("Random list: ");
@@ -63,7 +63,6 @@ void showarray(const names_t ar[], int lim)
 {
     for (size_t i = 0; i < lim; i++)
         printf("%s, %s\n", ar[i].last, ar[i].first);
-    return;
 }
 
 // sort by increasing value
@@ -71,11 +70,8 @@ int mycomp(const void * p1, const void * p2)
 {
     const names_t * ps1 = (const names_t *) p1;
     const names_t * ps2 = (const names_t *) p2;
-    int comp;
 
-    comp = strcmp(ps1->last, ps2->last);
-    if (comp != 0)
-        return comp;
-    else
-        return strcmp(ps1->first, ps2->first);
+    int comp = strcmp(ps1->last, ps2->last);
+
+    return comp ? comp : strcmp(ps1->first, ps2->first);
 }

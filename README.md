@@ -20,6 +20,7 @@ All solutions was compiled and tested on _macOS High Sierra (ver.10.13.6)_, _Xco
 * [14. Structures and Other Data Forms](src/pset14/)
 * [15. Bit Fiddling](src/pset15/)
 * [16. The C Preprocessor and the C Library](src/pset16/)
+* [17. Advanced Data Representation](src/pset17/)
 * __Note__: Exercises to chapter 17 are in the process
 
 
@@ -47,6 +48,7 @@ Text files are provided to support manually testing the exercises.
 * __digits.txt__: 20x30 digits file with no spaces.
 * __fewlines.txt__: few lines of the text.
 * __flight.dat__: the database for the first Colossus Airlines flight (*ex14_08*).
+* __movies.txt__: 11 "movies" to input for *ex17_01* - *ex17_03*
 * __persons.dat__: is used by `persons.c` (feed the address to the file as a command-line argument).
 * __softball.txt__: the softball team statistics, for use with the *ex14_06*.
 

@@ -4,15 +4,16 @@
 int BinSearch(int * ar, const int size, const int trg)
 {
     int find = 0;
-    int seek;
 
-    // Determine midpoint of the array
-    seek = (0 + size - 1) / 2;
-    if (seek >= 0)
+    if (size > 0)
     // At least there is one number to compare with
     {
+        int seek;
+        // Determine the midpoint of array
+        seek = (0 + size - 1) / 2;
+
+        // Check whether target number is in the array
         if (ar[seek] == trg)
-        // Target number is in the array
             find = 1;
         else if (ar[seek] > trg)
         // Search in the first half of array

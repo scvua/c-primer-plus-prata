@@ -1,4 +1,10 @@
-/* bsearch.h -- the bunary search function */
+/* 
+ *  bsearch.h -- solution for ex17_06
+ *  Write the function that uses the binary search technique. 
+ *  The function returns the value 1 if the integer is in the array, 
+ *  and 0 if it isn't.
+ *  Created by grescher on 02/25/2020.
+ */
 #ifndef _BSEARCH_H_
 #define _BSEARCH_H_
 

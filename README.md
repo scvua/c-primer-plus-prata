@@ -42,6 +42,7 @@ Files with `.dat` extension are the parts of some exercises and contain the data
 Text files are provided to support manually testing the exercises.
 
 * __/flights__: the folder contains data files for the *ex14_09* execution. Each file has the data of the Colossus Airlines flight with the corresponding flight number.
+* __alice_in_wonderland.txt__: project Gutenberg's "Alice's Adventures in Wonderland", by Lewis Carroll
 * __alphabet.txt__: 26 lines with the alphabetic characters.
 * __book.dat__: the books database for *ex14_07*.
 * __digits.spaced.txt__: input file for *ex13_12*, *ex13_13*, and *ex13_14*. The file was created by applying `spacer.c` on `digits.txt`.

@@ -52,6 +52,7 @@ Text files are provided to support manually testing the exercises.
 * __movies.txt__: 11 "movies" to input for *ex17_01* - *ex17_03*
 * __persons.dat__: is used by `persons.c` (feed the address to the file as a command-line argument).
 * __softball.txt__: the softball team statistics, for use with the *ex14_06*.
+* __words.txt__: the text file on which I tested *ex17_07*.
 
 
 ### License

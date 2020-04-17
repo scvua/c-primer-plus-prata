@@ -1,0 +1,19 @@
+# Test file for "exercise 17.07"
+
+## Fragment from the _Alice's Adventures in Wonderland_ by Lewis Carroll
+
+The rabbit-hole went straight on like a tunnel for some way
+
+Down, down, down. Would the fall **NEVER** come to an end! 'I wonder how
+many miles I've fallen by this time?' she said aloud. 'I must be getting
+somewhere near the centre of the earth. Let me see: that would be four
+thousand miles down, I think--' (for, you see, Alice had learnt several
+things of this sort in her lessons in the schoolroom, and though this
+was not a VERY good opportunity for showing off her knowledge, as there
+was no one to listen to her, still it was good practice to say it over)
+'--yes, that's about the right distance--but then I wonder what Latitude
+or Longitude I've got to?' (Alice had no idea what Latitude was, or
+Longitude either, but thought they were nice grand words to say.)
+
+0xFFA5D1 4ever mau5 1994b spoke--fancy rabbit-hole you're it's horse's
+

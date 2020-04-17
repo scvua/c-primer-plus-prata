@@ -237,7 +237,7 @@ char showmenu(void)
 void printall(Tree * ptree)
 {
     puts("Here's all the words I've read:");
-    puts("Count\tWord\n");
+    puts("Count\tWord");
     Traverse(ptree, wordinfo);
 }
 

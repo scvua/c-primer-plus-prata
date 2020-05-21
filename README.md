@@ -21,7 +21,7 @@ All solutions was compiled and tested on _macOS High Sierra (ver.10.13.6)_, _Xco
 * [15. Bit Fiddling](src/pset15/)
 * [16. The C Preprocessor and the C Library](src/pset16/)
 * [17. Advanced Data Representation](src/pset17/)
-* __Note__: Exercises to chapter 17 are in the process
+* __Note__: Exercise 17.8 is in the process
 
 
 ### Extras

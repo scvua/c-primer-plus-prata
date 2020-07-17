@@ -6,22 +6,22 @@
 
 /* local data type */
 typedef struct pair {
-    Trnode *parent;
-    Trnode *child;
+    TreeNode *parent;
+    TreeNode *child;
 } Pair;
 
 /* prototype for local functions */
-static Trnode *makeNode(const Item *pi);
-static bool toLeft(const Item *i1, const Item *i2);
-static bool toRight(const Item *i1, const Item *i2);
-static void addNode(Trnode *new_node, Trnode *root);
-static void inOrder(const Trnode *root, void (*pfun)(Item item));
-static Pair seekItem(const Item *pi, const Tree *ptree);
-static void deleteNode(Trnode **ptr);
-static void deleteAllNodes(Trnode *ptr);
+static TreeNode *makeNode(const TreeItem *pi);
+static bool toLeft(const TreeItem *i1, const TreeItem *i2);
+static bool toRight(const TreeItem *i1, const TreeItem *i2);
+static void addNode(TreeNode *new_node, TreeNode *root);
+static void inOrder(const TreeNode *root, void (*pfun)(TreeItem item));
+static Pair seekItem(const TreeItem *pi, const Tree *ptree);
+static void deleteNode(TreeNode **ptr);
+static void deleteAllNodes(TreeNode *ptr);
 
 /* function definitions */
-void InitializeTree(Tree *ptree)
+void TreeInit(Tree *ptree)
 {
     ptree->root = NULL;
     ptree->size = 0;
@@ -48,9 +48,9 @@ int TreeItemCount(const Tree *ptree)
     return ptree->size;
 }
 
-bool AddItem(const Item *pi, Tree *ptree)
+bool TreeAddItem(const TreeItem *pi, Tree *ptree)
 {
-    Trnode * new_node;
+    TreeNode * new_node;
 
     if (TreeIsFull(ptree)) 
     {
@@ -79,12 +79,12 @@ bool AddItem(const Item *pi, Tree *ptree)
     return true;                        /* successful return        */
 }
 
-bool InTree(const Item *pi, const Tree *ptree)
+bool InTree(const TreeItem *pi, const Tree *ptree)
 {
     return (seekItem(pi, ptree).child == NULL) ? false : true;
 }
 
-bool DeleteItem(const Item *pi, Tree *ptree)
+bool TreeDeleteItem(const TreeItem *pi, Tree *ptree)
 {
     Pair look;
 
@@ -103,13 +103,13 @@ bool DeleteItem(const Item *pi, Tree *ptree)
     return true;
 }
 
-void Traverse(const Tree *ptree, void (*pfun)(Item item))
+void TreeTraverse(const Tree *ptree, void (*pfun)(TreeItem item))
 {
     if (ptree != NULL)
         inOrder(ptree->root, pfun);
 }
 
-void DeleteAll(Tree *ptree)
+void TreeEmpty(Tree *ptree)
 {
     if (ptree != NULL)
         deleteAllNodes(ptree->root);
@@ -118,7 +118,7 @@ void DeleteAll(Tree *ptree)
 }
 
 /* local functions */
-static void inOrder(const Trnode *root, void (*pfun)(Item item))
+static void inOrder(const TreeNode *root, void (*pfun)(TreeItem item))
 {
     if (root != NULL)
     {
@@ -128,9 +128,9 @@ static void inOrder(const Trnode *root, void (*pfun)(Item item))
     }
 }
 
-static void deleteAllNodes(Trnode *root)
+static void deleteAllNodes(TreeNode *root)
 {
-    Trnode *pright;
+    TreeNode *pright;
 
     if (root != NULL)
     {
@@ -141,7 +141,7 @@ static void deleteAllNodes(Trnode *root)
     }
 }
 
-static void addNode(Trnode *new_node, Trnode *root)
+static void addNode(TreeNode *new_node, TreeNode *root)
 {
     if (toLeft(&new_node->item, &root->item))
     {
@@ -164,7 +164,7 @@ static void addNode(Trnode *new_node, Trnode *root)
     }
 }
 
-static bool toLeft(const Item *i1, const Item *i2)
+static bool toLeft(const TreeItem *i1, const TreeItem *i2)
 {
     int comp1;
 
@@ -177,7 +177,7 @@ static bool toLeft(const Item *i1, const Item *i2)
         return false;
 }
 
-static bool toRight(const Item *i1, const Item *i2)
+static bool toRight(const TreeItem *i1, const TreeItem *i2)
 {
     int comp1;
 
@@ -190,11 +190,11 @@ static bool toRight(const Item *i1, const Item *i2)
         return false;
 }
 
-static Trnode *makeNode(const Item *pi)
+static TreeNode *makeNode(const TreeItem *pi)
 {
-    Trnode *new_node;
+    TreeNode *new_node;
 
-    new_node = (Trnode *) calloc(1, sizeof(Trnode));
+    new_node = (TreeNode *) calloc(1, sizeof(TreeNode));
     if (new_node != NULL)
     {
         new_node->item = *pi;
@@ -204,7 +204,7 @@ static Trnode *makeNode(const Item *pi)
     return new_node;
 }
 
-static Pair seekItem(const Item *pi, const Tree *ptree)
+static Pair seekItem(const TreeItem *pi, const Tree *ptree)
 {
     Pair look;
     look.parent = NULL;
@@ -231,10 +231,10 @@ static Pair seekItem(const Item *pi, const Tree *ptree)
     return look;                        /* successful return        */
 }
 
-static void deleteNode(Trnode **ptr)
+static void deleteNode(TreeNode **ptr)
 /* ptr is address of parent member pointing to target node          */
 {
-    Trnode *temp;
+    TreeNode *temp;
 
     if ( (*ptr)->left == NULL)
     {

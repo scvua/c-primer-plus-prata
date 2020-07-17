@@ -16,7 +16,7 @@ void addPet(Tree *pt);
 void dropPet(Tree *pt);
 void showPets(const Tree *pt);
 void findPet(const Tree *pt);
-void printItem(Item item);
+void printItem(TreeItem item);
 void uppercase(char *str);
 char *s_gets(char *st, int n);
 
@@ -25,7 +25,7 @@ int main(void)
     Tree pets;
     char choice;
 
-    InitializeTree(&pets);
+    TreeInit(&pets);
     while ((choice = menu()) != 'q')
     {
         switch (choice)
@@ -43,7 +43,7 @@ int main(void)
             default  :  puts("Switching error");
         }
     }
-    DeleteAll(&pets);
+    TreeEmpty(&pets);
     puts("Bye.");
 
     return 0;
@@ -76,7 +76,7 @@ char menu(void)
 
 void addPet(Tree *pt)
 {
-    Item temp;
+    TreeItem temp;
 
     if (TreeIsFull(pt))
         puts("No room in the club!");
@@ -88,7 +88,7 @@ void addPet(Tree *pt)
         s_gets(temp.petkind, SLEN);
         uppercase(temp.petname);
         uppercase(temp.petkind);
-        AddItem(&temp, pt);
+        TreeAddItem(&temp, pt);
     }
 }
 
@@ -97,17 +97,17 @@ void showPets(const Tree *pt)
     if (TreeIsEmpty(pt))
         puts("No entries!");
     else
-        Traverse(pt, printItem);
+        TreeTraverse(pt, printItem);
 }
 
-void printItem(Item item)
+void printItem(TreeItem item)
 {
     printf("Pet: %-19s Kind: %-19s\n", item.petname, item.petkind);
 }
 
 void findPet(const Tree *pt)
 {
-    Item temp;
+    TreeItem temp;
     
     if (TreeIsEmpty(pt))
     {
@@ -131,7 +131,7 @@ void findPet(const Tree *pt)
 
 void dropPet(Tree *pt)
 {
-    Item temp;
+    TreeItem temp;
 
     if (TreeIsEmpty(pt))
     {
@@ -146,7 +146,7 @@ void dropPet(Tree *pt)
     uppercase(temp.petname);
     uppercase(temp.petkind);
     printf("%s the %s ", temp.petname, temp.petkind);
-    if (DeleteItem(&temp, pt))
+    if (TreeDeleteItem(&temp, pt))
         printf("is dropped from the club.\n");
     else
         printf("is not a member.\n");

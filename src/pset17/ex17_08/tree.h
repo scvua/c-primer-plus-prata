@@ -11,20 +11,20 @@ typedef struct item
 {
     char petname[SLEN];
     char petkind[SLEN];
-} Item;
+} TreeItem;
 
 #define MAXITEMS 10
 
 typedef struct trnode 
 {
-    Item item;
-    struct trnode * left;     /* pointer to left branch       */
-    struct trnode * right;    /* pointer to right branch      */
-} Trnode;
+    TreeItem item;
+    struct trnode *left;      /* pointer to left branch       */
+    struct trnode *right;     /* pointer to right branch      */
+} TreeNode;
 
 typedef struct tree
 {
-    Trnode * root;            /* pointer to root of tree      */
+    TreeNode *root;           /* pointer to root of tree      */
     int size;                 /* number of items in tree      */
 } Tree;
 
@@ -33,24 +33,24 @@ typedef struct tree
 /* operation:       initialize a tree to empty                */
 /* preconditions:   ptree points to a tree                    */
 /* postconditions:  the tree is initialized to empty          */
-void InitializeTree(Tree * ptree);
+void TreeInit(Tree *ptree);
 
 /* operation:       determine if tree is empty                */
 /* preconditions:   ptree points to a tree                    */
 /* postconditions:  function returns true if tree is          */
 /*                  empty and returns false otherwise         */
-bool TreeIsEmpty(const Tree * ptree);
+bool TreeIsEmpty(const Tree *ptree);
 
 /* operation:       determine if tree is full                 */
 /* preconditions:   ptree points to a tree                    */
 /* postconditions:  function returns true if tree is          */
 /*                  full and returns false otherwise          */
-bool TreeIsFull(const Tree * ptree);
+bool TreeIsFull(const Tree *ptree);
 
 /* operation:       determine number of items in tree         */
 /* preconditions:   ptree points to a tree                    */
 /* postconditions:  function returns number of items in tree  */
-int TreeItemCount(const Tree * ptree);
+int TreeItemCount(const Tree *ptree);
 
 /* operation:       add an item to a tree                     */
 /* preconditions:   pi is address of item to be added         */
@@ -58,14 +58,14 @@ int TreeItemCount(const Tree * ptree);
 /* postconditions:  if possible, function adds item to        */
 /*                  tree and returns true; otherwise,         */
 /*                  the function returns false                */
-bool AddItem(const Item * pi, Tree * ptree);
+bool TreeAddItem(const TreeItem *pi, Tree *ptree);
 
 /* operation:       find an item in a tree                    */
 /* precondition:    pi points to an item                      */
 /*                  ptree points to an initialized tree       */
 /* postconditions:  function returns true if item is in       */
 /*                  tree and returns false otherwise          */
-bool InTree(const Item * pi, const Tree * ptree);
+bool InTree(const TreeItem *pi, const Tree *ptree);
 
 /* operation:       delete an item from a tree                */
 /* preconditions:   pi is address of item to be deleted       */
@@ -73,7 +73,7 @@ bool InTree(const Item * pi, const Tree * ptree);
 /* postconditions:  if possible, function deletes item        */
 /*                  from tree and returns true;               */
 /*                  otherwise the function returns false      */
-bool DeleteItem(const Item * pi, Tree * ptree);
+bool TreeDeleteItem(const TreeItem *pi, Tree *ptree);
 
 /* operation:       apply a function to each item in the tree */
 /* preconditions:   ptree points to an initialized tree       */
@@ -81,11 +81,11 @@ bool DeleteItem(const Item * pi, Tree * ptree);
 /*                  Item argument and has no return value     */
 /* postconditions:  the function pointed to by pfun is        */
 /*                  executed once for each item in tree       */
-void Traverse(const Tree * ptree, void (*pfun)(Item item));
+void TreeTraverse(const Tree *ptree, void (*pfun)(TreeItem item));
 
 /* operation:       delete everything from a tree             */
 /* preconditions:   ptree points to an initialized tree       */
 /* postconditions:  tree is empty                             */
-void DeleteAll(Tree * ptree);
+void TreeEmpty(Tree *ptree);
 
 #endif  /* _TREE_H_ */

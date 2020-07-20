@@ -164,7 +164,7 @@ bool wordisnew(char * st, Tree * ptree)
     temp.word = st;
     temp.count = 0;
 
-    return (InTree(&temp, ptree) == NULL);
+    return (!InTree(&temp, ptree));
 }
 
 // Add new word to the tree
@@ -191,15 +191,15 @@ bool addword(char * st, Tree * ptree)
 void wordcount(char * st, Tree * ptree)
 {
     Item temp;
-    Trnode * find;
+    Item * find;
 
     temp.word = st;
     temp.count = 0;
 
-    find = InTree(&temp, ptree);
+    find = FindItem(&temp, ptree);
     if (find != NULL)
     {
-        find->item.count++;
+        find->count++;
     }
 }
 
@@ -257,10 +257,10 @@ void printword(Tree * ptree)
     tempItem.word = input;
     tempItem.count = 0;
     // Search for the word
-    if ((pNode = InTree(&tempItem, ptree)) != NULL)
+    if (InTree(&tempItem, ptree))
     {
         printf("Count\tWord\n");
-        wordinfo(pNode->item);
+        wordinfo(*(FindItem(&tempItem, ptree)));
     }
     else
         printf("%s: Word is not in the tree.\n", input);

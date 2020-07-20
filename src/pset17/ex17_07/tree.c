@@ -79,9 +79,20 @@ bool AddItem(const Item * pi, Tree * ptree)
     return true;                    /* successful return        */
 }
 
-Trnode * InTree(const Item * pi, const Tree * ptree)
+bool InTree(const Item * pi, const Tree * ptree)
 {
-    return SeekItem(pi, ptree).child;
+    return (SeekItem(pi, ptree).child == NULL ? false : true);
+}
+
+Item * FindItem(const Item * pi, const Tree * ptree)
+{
+    Trnode * find;
+
+    find = SeekItem(pi, ptree).child;
+    if (find != NULL)
+        return &(find->item);
+    else
+        return NULL;
 }
 
 bool DeleteItem(const Item * pi, Tree * ptree)

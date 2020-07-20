@@ -59,13 +59,19 @@ int TreeItemCount(const Tree * ptree);
 /*                  the function returns false              */
 bool AddItem(const Item * pi, Tree * ptree);
 
+/* operation:       check whether an item is in a tree      */
+/* preconditions:   pi points to an item                    */
+/*                  ptree points to an initialized tree     */
+/* postconditions:  function returns true if item is in     */
+/*                  tree and returns false otherwise        */
+bool InTree(const Item * pi, const Tree * ptree);
+
 /* operation:       find an item in a tree                  */
 /* preconditions:   pi points to an item                    */
 /*                  ptree points to an initialized tree     */
-/* postconditions:  function returns pointer-to-node if     */
-/*                  item is in tree and returns NULL        */
-/*                  otherwise                               */
-Trnode * InTree(const Item * pi, const Tree * ptree);
+/* postconditions:  function returns address of item if     */
+/*                  it's in tree and returns NULL otherwise */
+Item * FindItem(const Item * pi, const Tree * ptree);
 
 /* operation:       delete an item from a tree              */
 /* preconditions:   pi is address of item to be deleted     */

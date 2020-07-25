@@ -3,14 +3,15 @@
 #ifndef _TREE_H_
 #define _TREE_H_
 #include <stdbool.h>
+#include "list.h"
 
 #define SLEN 20
 
 /* redefine Item as appropriate */
-typedef struct item 
+typedef struct treeItem 
 {
     char petname[SLEN];
-    char petkind[SLEN];
+    List petkind;
 } TreeItem;
 
 #define MAXITEMS 10
@@ -61,11 +62,19 @@ int TreeItemCount(const Tree *ptree);
 bool TreeAddItem(const TreeItem *pi, Tree *ptree);
 
 /* operation:       find an item in a tree                    */
-/* precondition:    pi points to an item                      */
+/* preconditions:   pi points to an item                      */
 /*                  ptree points to an initialized tree       */
 /* postconditions:  function returns true if item is in       */
 /*                  tree and returns false otherwise          */
 bool InTree(const TreeItem *pi, const Tree *ptree);
+
+/* operation:       find an item in a tree                    */
+/* preconditions:   pi points to an item                      */
+/*                  ptree points to an initialized tree       */
+/* postconditions:  function returns address of the item if   */
+/*                  item is in a tree and returns NULL        */ 
+/*                  otherwise                                 */
+TreeItem *TreeItemSearch(const TreeItem *pi, const Tree *ptree);
 
 /* operation:       delete an item from a tree                */
 /* preconditions:   pi is address of item to be deleted       */

@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "list.h"
 #include "tree.h"
 
 /* local data type */
@@ -29,18 +30,12 @@ void TreeInit(Tree *ptree)
 
 bool TreeIsEmpty(const Tree *ptree)
 {
-    if (ptree->root == NULL)
-        return true;
-    else
-        return false;
+    return (ptree->root == NULL);
 }
 
 bool TreeIsFull(const Tree *ptree)
 {
-    if (ptree->size >= MAXITEMS)
-        return true;
-    else
-        return false;
+    return (ptree->size >= MAXITEMS);
 }
 
 int TreeItemCount(const Tree *ptree)
@@ -57,7 +52,7 @@ bool TreeAddItem(const TreeItem *pi, Tree *ptree)
         fprintf(stderr, "Tree is full\n");
         return false;                   /* early return             */  //-->
     }
-    if (seekItem(pi, ptree).child != NULL)
+    if (InTree(pi, ptree))
     {
         fprintf(stderr, "Attempted to add duplicate item\n");
         return false;                   /* early return             */  //-->
@@ -82,6 +77,11 @@ bool TreeAddItem(const TreeItem *pi, Tree *ptree)
 bool InTree(const TreeItem *pi, const Tree *ptree)
 {
     return (seekItem(pi, ptree).child == NULL) ? false : true;
+}
+
+TreeItem *TreeItemSearch(const TreeItem *pi, const Tree *ptree)
+{
+    return &seekItem(pi, ptree).child->item;
 }
 
 bool TreeDeleteItem(const TreeItem *pi, Tree *ptree)
@@ -136,6 +136,7 @@ static void deleteAllNodes(TreeNode *root)
     {
         pright = root->right;
         deleteAllNodes(root->left);
+        ListEmpty(&root->item.petkind);
         free(root);
         deleteAllNodes(pright);
     }
@@ -170,9 +171,9 @@ static bool toLeft(const TreeItem *i1, const TreeItem *i2)
 
     if ((comp1 = strcmp(i1->petname, i2->petname)) < 0)
         return true;
-    else if (comp1 == 0 &&
-            strcmp(i1->petkind, i2->petkind) < 0)
-        return true;
+//    else if (comp1 == 0 &&
+//            strcmp(i1->petkind, i2->petkind) < 0)
+//        return true;
     else
         return false;
 }
@@ -183,9 +184,9 @@ static bool toRight(const TreeItem *i1, const TreeItem *i2)
 
     if ((comp1 = strcmp(i1->petname, i2->petname)) > 0)
         return true;
-    else if (comp1 == 0 &&
-            strcmp(i1->petkind, i2->petkind) > 0)
-        return true;
+//    else if (comp1 == 0 &&
+//            strcmp(i1->petkind, i2->petkind) > 0)
+//        return true;
     else
         return false;
 }
@@ -198,6 +199,7 @@ static TreeNode *makeNode(const TreeItem *pi)
     if (new_node != NULL)
     {
         new_node->item = *pi;
+        ListInit(&new_node->item.petkind);
         new_node->left = NULL;
         new_node->right = NULL;
     }
@@ -240,12 +242,14 @@ static void deleteNode(TreeNode **ptr)
     {
         temp = *ptr;
         *ptr = (*ptr)->right;
+        ListEmpty(&(temp->item.petkind));
         free(temp);
     }
     else if ( (*ptr)->right == NULL)
     {
         temp = *ptr;
         *ptr = (*ptr)->left;
+        ListEmpty(&(temp->item.petkind));
         free(temp);
     }
     else            /* deleted node has two children                */
@@ -256,6 +260,7 @@ static void deleteNode(TreeNode **ptr)
         temp->right = (*ptr)->right;
         temp = *ptr;
         *ptr = (*ptr)->left;
+        ListEmpty(&temp->item.petkind);
         free(temp);
     }
 }

@@ -1,26 +1,28 @@
 /* list.c -- functions supporting list operations */
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "list.h"
 
 /* local function prototype */
-static void copyToListNode(ListItem item, ListNode *pnode);
+static void copyToListNode(const ListItem *pi, ListNode *pnode);
+static bool itemsIsEqual(const ListItem *i1, const ListItem *i2);
+static ListNode *listItemSeek(const ListItem *pi, const List *plist);
 
 /* interface functions      */
 
 /* set the list to empty    */
 void ListInit(List *plist)
 {
-    *plist = NULL;
+    plist->front = NULL;
+    plist->back = NULL;
+    plist->len = 0;
 }
 
 /* returns true if list is empty */
 bool ListIsEmpty(const List *plist)
 {
-    if (*plist == NULL)
-        return true;
-    else
-        return false;
+    return (plist->front == NULL);
 }
 
 /* returns true if list is full */
@@ -42,45 +44,75 @@ bool ListIsFull(const List *plist)
 /* returns number of nodes  */
 unsigned int ListItemCount(const List *plist)
 {
-    unsigned int count = 0;
-    ListNode *pnode = *plist;   /* set to start of list */
-
-    while (pnode != NULL)
-    {
-        ++count;
-        pnode = pnode->next;    /* set to next node     */
-    }
-    return count;
+    return plist->len;
 }
 
 /* creates node to hold item and adds it to the end of  */
 /* the list pointed to by plist (slow implementation)   */
-bool ListAddItem(ListItem item, List *plist)
+bool ListAddItem(const ListItem *pi, List *plist)
 {
     ListNode *pnew;
-    ListNode *scan = *plist;
 
     pnew = (ListNode *) calloc(1, sizeof(ListNode));
     if (pnew == NULL)
         return false;   /* quit function on failure     */              //-->
 
-    copyToListNode(item, pnew);
+    copyToListNode(pi, pnew);
     pnew->next = NULL;
-    if (scan == NULL)       /* empty list so place      */
-        *plist = pnew;      /* pnew at head of list     */
+    if (ListIsEmpty(plist)) /* empty list so place      */
+    {                       /* pnew at head of list     */
+        pnew->prev = NULL;
+        plist->front = pnew;
+        plist->back = pnew;
+    }
+    else                    /* add pnew to end          */
+    {
+        pnew->prev = plist->back;
+        plist->back->next = pnew;
+        plist->back = pnew;
+    }
+    plist->len++;
+    return true;
+}
+
+bool ListRemoveItem(const ListItem *pi, List *plist)
+{
+    ListNode *temp;
+
+    temp = listItemSeek(pi, plist);
+    if (temp == NULL)
+        return false;
+
+    if (temp == plist->front)
+    {
+        plist->front = temp->next;
+        plist->front->prev = NULL;
+    }
+    else if (temp == plist->back)
+    {
+        plist->back = temp->prev;
+        plist->back->next = NULL;
+    }
     else
     {
-        while (scan->next != NULL)
-            scan = scan->next;  /* find end of list     */
-        scan->next = pnew;      /* add pnew to end      */
+        temp->next->prev = temp->prev;
+        temp->prev->next = temp->next;
     }
+    free(temp);
+    plist->len--;
+
     return true;
+}
+
+bool ListContainsItem(const ListItem *pi, const List *plist)
+{
+    return (listItemSeek(pi, plist) == NULL) ? false : true;
 }
 
 /* visit each node and execute function pointed to by pfun */
 void ListTraverse(const List *plist, void (*pfun)(ListItem item))
 {
-    ListNode *pnode = *plist;   /* set to start of list */
+    ListNode *pnode = plist->front; /* set to start of list */
 
     while (pnode != NULL)
     {
@@ -95,18 +127,39 @@ void ListEmpty(List *plist)
 {
     ListNode *psave;
 
-    while (*plist != NULL)
+    while (plist->front != NULL)
     {
-        psave = (*plist)->next; /* save address of next node */
-        free(*plist);           /* free current node         */
-        *plist = psave;         /* advance to next node      */
+        psave = plist->front->next; /* save address of next node */
+        free(plist->front);         /* free current node         */
+        plist->front = psave;       /* advance to next node      */
     }
+    plist->back = NULL;
+    plist->len = 0;
 }
 
 /* local function definition    */
 /* copies an item into a node   */
-static void copyToListNode(ListItem item, ListNode *pnode)
+static void copyToListNode(const ListItem *pi, ListNode *pnode)
 {
-    pnode->item = item; /* structure copy */
+    pnode->item = *pi; /* structure copy */
 }
 
+static bool itemsIsEqual(const ListItem *i1, const ListItem *i2)
+{
+    return (strcmp(i1->petkind, i2->petkind) == 0);
+}
+
+static ListNode *listItemSeek(const ListItem *pi, const List *plist)
+{
+    static ListNode *find = NULL;
+
+    // Check if `find` already has an address of a list node from the previous
+    // function call; if so compare item value of the node to pi
+    if (find == NULL || !itemsIsEqual(pi, &find->item) )
+    {
+        find = plist->front;
+        while (find != NULL && !itemsIsEqual(pi, &find->item))
+            find = find->next;
+    }
+    return find;
+}

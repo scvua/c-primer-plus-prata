@@ -5,24 +5,27 @@
 
 /* program-specific declarations */
 
-#define TSIZE   45      /* size of array to hold title  */
-struct film
+#define SLEN   20  /* Size of ListItem strings */
+typedef struct listItem
 {
-    char title[TSIZE];
-    int rating;
-};
+    char petkind[SLEN];
+} ListItem;
 
 /* general type definitions     */
-
-typedef struct film ListItem;
 
 typedef struct listNode
 {
     ListItem item;
     struct listNode *next;
+    struct listNode *prev;
 } ListNode;
 
-typedef ListNode *List;
+typedef struct list
+{
+    ListNode *front;
+    ListNode *back;
+    unsigned int len;
+} List;
 
 /* function prototypes  */
 
@@ -49,12 +52,28 @@ bool ListIsFull(const List *plist);
 unsigned int ListItemCount(const List *plist);
 
 /* operation:       add item to end of list                     */
-/* preconditions:   item is an item to be added to list         */
+/* preconditions:   pi points an item to be added to list       */
 /*                  plist points to an initialized list         */
-/* postconditions:  if possible, functions adds item to end     */
+/* postconditions:  if possible, function adds item to end      */
 /*                  of list and returns True; otherwise the     */
 /*                  function returns False                      */
-bool ListAddItem(ListItem item, List *plist);
+bool ListAddItem(const ListItem *pi, List *plist);
+
+/* operation:       remove item from the list                   */
+/* preconditions:   pi points to an item to be removed from list*/
+/*                  plist points to an initialized list         */
+/* postconditions:  if list is not empty, function searches the */
+/*                  list for item and, if the item is in list,  */
+/*                  deletes it and returns True; otherwise the  */
+/*                  function returns False                      */
+bool ListRemoveItem(const ListItem *pi, List *plist);
+
+/* operation:       find an item in list                        */
+/* preconditions:   pi points to an item                        */
+/*                  plist points to an initialized list         */
+/* postconditions:  function returns True if item is in         */
+/*                  list and returns False otherwise            */
+bool ListContainsItem(const ListItem *pi, const List *plist);
 
 /* operation:       apply a function to each item in list       */
 /* preconditions:   plist points to an initialized list         */

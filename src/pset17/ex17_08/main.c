@@ -14,11 +14,16 @@
 char menu(void);
 void addPet(Tree *pt);
 void dropPet(Tree *pt);
-void showPets(const Tree *pt);
 void findPet(const Tree *pt);
-void printItem(TreeItem item);
+void showPets(const Tree *pt);
+void printTreeItem(TreeItem item);
+void printListItem(ListItem item);
+void countAllPets(const Tree *pt);
+void petCounter(TreeItem item);
 void uppercase(char *str);
 char *s_gets(char *st, int n);
+
+static int numPets;
 
 int main(void)
 {
@@ -36,7 +41,7 @@ int main(void)
                         break;
             case 'f' :  findPet(&pets);
                         break;
-            case 'n' :  printf("%d pets in club\n", TreeItemCount(&pets));
+            case 'n' :  countAllPets(&pets);
                         break;
             case 'd' :  dropPet(&pets);
                         break;
@@ -76,20 +81,96 @@ char menu(void)
 
 void addPet(Tree *pt)
 {
-    TreeItem temp;
+    TreeItem tmpName;
+    ListItem tmpKind;
+    List *petkindList;
 
     if (TreeIsFull(pt))
-        puts("No room in the club!");
-    else
     {
-        puts("Please enter name of pet:");
-        s_gets(temp.petname, SLEN);
-        puts("Please enter pet kind:");
-        s_gets(temp.petkind, SLEN);
-        uppercase(temp.petname);
-        uppercase(temp.petkind);
-        TreeAddItem(&temp, pt);
+        puts("No room in the club!");
+        return;                                                         //-->
     }
+    puts("Please enter name of pet:");
+    s_gets(tmpName.petname, SLEN);
+    puts("Please enter pet kind:");
+    s_gets(tmpKind.petkind, SLEN);
+    uppercase(tmpName.petname);
+    uppercase(tmpKind.petkind);
+
+    if (!InTree(&tmpName, pt))
+        TreeAddItem(&tmpName, pt);              /* the new pet name */
+    petkindList = &TreeItemSearch(&tmpName, pt)->petkind; 
+    if (!ListContainsItem(&tmpKind, petkindList))
+        ListAddItem(&tmpKind, petkindList);     /* the new pet kind */
+    else
+        printf("%s the %s is already a member\n", 
+                tmpName.petname, tmpKind.petkind);       
+}
+
+void dropPet(Tree *pt)
+{
+    TreeItem tmpName;
+    ListItem tmpKind;
+    List *petkindList;
+    
+    if (TreeIsEmpty(pt))
+    {
+        puts("No entries!");
+        return;     /* quit function if tree is empty */                //-->
+    }
+    
+    puts("Please enter name of pet you wish to delete:");
+    s_gets(tmpName.petname, SLEN);
+    puts("Please enter pet kind:");
+    s_gets(tmpKind.petkind, SLEN);
+    uppercase(tmpName.petname);
+    uppercase(tmpKind.petkind);
+    printf("%s the %s ", tmpName.petname, tmpKind.petkind);
+    
+    if (InTree(&tmpName, pt))
+    {
+        // Petname is in the tree, so look up for a kind in the tree item list
+        petkindList = &TreeItemSearch(&tmpName, pt)->petkind;
+        if (ListRemoveItem(&tmpKind, petkindList))
+        {
+            if (ListIsEmpty(petkindList)) // Last kind with the name is removed
+                TreeDeleteItem(&tmpName, pt);             // so delete the name
+            printf("is dropped from the club.\n");
+            return; /* quit function if pet is successfully deleted */  //-->
+        }
+    }
+    printf("is not a member.\n");
+}
+
+void findPet(const Tree *pt)
+{
+    TreeItem tmpName;
+    ListItem tmpKind;
+    List *petkindList;
+    
+    if (TreeIsEmpty(pt))
+    {
+        puts("No entries!");
+        return;     /* quit function if tree is empty   */              //-->
+    }
+    
+    puts("Please enter name of pet you wish to find:");
+    s_gets(tmpName.petname, SLEN);
+    puts("Please enter pet kind:");
+    s_gets(tmpKind.petkind, SLEN);
+    uppercase(tmpName.petname);
+    uppercase(tmpKind.petkind);
+    printf("%s the %s ", tmpName.petname, tmpKind.petkind);
+    if (InTree(&tmpName, pt))
+    {
+        petkindList = &TreeItemSearch(&tmpName, pt)->petkind;
+        if (ListContainsItem(&tmpKind, petkindList))
+        {
+            printf("is a member.\n");
+            return;     /* quit function if pet is in a club */         //-->
+        }
+    }
+    printf("is not a member.\n");
 }
 
 void showPets(const Tree *pt)
@@ -97,59 +178,31 @@ void showPets(const Tree *pt)
     if (TreeIsEmpty(pt))
         puts("No entries!");
     else
-        TreeTraverse(pt, printItem);
+        TreeTraverse(pt, printTreeItem);
 }
 
-void printItem(TreeItem item)
+void printTreeItem(const TreeItem item)
 {
-    printf("Pet: %-19s Kind: %-19s\n", item.petname, item.petkind);
+    printf(" Pet: %-19s\n", item.petname);
+    ListTraverse(&item.petkind, printListItem);
+    puts("- - - - - - -");
 }
 
-void findPet(const Tree *pt)
+void printListItem(const ListItem item)
 {
-    TreeItem temp;
-    
-    if (TreeIsEmpty(pt))
-    {
-        puts("No entries!");
-        return;     /* quit function if tree is empty   */              //-->
-    }
-
-
-    puts("Please enter name of pet you wish to find:");
-    s_gets(temp.petname, SLEN);
-    puts("Please enter pet kind:");
-    s_gets(temp.petkind, SLEN);
-    uppercase(temp.petname);
-    uppercase(temp.petkind);
-    printf("%s the %s ", temp.petname, temp.petkind);
-    if (InTree(&temp, pt))
-        printf("is a member.\n");
-    else 
-        printf("is not a member.\n");
+    printf("Kind: %-19s\n", item.petkind);
 }
 
-void dropPet(Tree *pt)
+void countAllPets(const Tree *pt)
 {
-    TreeItem temp;
+    numPets = 0;
+    TreeTraverse(pt, petCounter);
+    printf("%d %s in club\n", numPets, numPets == 1 ? "pet" : "pets");
+}
 
-    if (TreeIsEmpty(pt))
-    {
-        puts("No entries!");
-        return;     /* quit function if tree is empty */
-    }
-
-    puts("Please enter name of pet you wish to delete:");
-    s_gets(temp.petname, SLEN);
-    puts("Please enter pet kind:");
-    s_gets(temp.petkind, SLEN);
-    uppercase(temp.petname);
-    uppercase(temp.petkind);
-    printf("%s the %s ", temp.petname, temp.petkind);
-    if (TreeDeleteItem(&temp, pt))
-        printf("is dropped from the club.\n");
-    else
-        printf("is not a member.\n");
+void petCounter(TreeItem item)
+{
+    numPets += item.petkind.len;
 }
 
 void uppercase(char *str)

@@ -22,7 +22,7 @@ void ListInit(List *plist)
 /* returns true if list is empty */
 bool ListIsEmpty(const List *plist)
 {
-    return (plist->front == NULL);
+    return (plist->len == 0);
 }
 
 /* returns true if list is full */
@@ -83,20 +83,28 @@ bool ListRemoveItem(const ListItem *pi, List *plist)
     if (temp == NULL)
         return false;
 
-    if (temp == plist->front)
+    if (temp == plist->front)       // temp is the first list node.
     {
-        plist->front = temp->next;
-        plist->front->prev = NULL;
+        if (temp->next != NULL)
+        {
+            temp->next->prev = NULL;
+            plist->front = temp->next;
+        }
+        else                        // temp is the single node in the list.
+        {
+            plist->front = NULL;
+            plist->back = NULL;
+        }
     }
-    else if (temp == plist->back)
+    else if (temp == plist->back)   // temp is the last list node.
     {
+        temp->prev->next = NULL;
         plist->back = temp->prev;
-        plist->back->next = NULL;
     }
-    else
+    else                            // temp is in the middle of the list.
     {
-        temp->next->prev = temp->prev;
         temp->prev->next = temp->next;
+        temp->next->prev = temp->prev;
     }
     free(temp);
     plist->len--;
@@ -151,15 +159,10 @@ static bool itemsIsEqual(const ListItem *i1, const ListItem *i2)
 
 static ListNode *listItemSeek(const ListItem *pi, const List *plist)
 {
-    static ListNode *find = NULL;
+    ListNode *find = plist->front;
+    
+    while (find != NULL && !itemsIsEqual(pi, &find->item))
+        find = find->next;
 
-    // Check if `find` already has an address of a list node from the previous
-    // function call; if so compare item value of the node to pi
-    if (find == NULL || !itemsIsEqual(pi, &find->item) )
-    {
-        find = plist->front;
-        while (find != NULL && !itemsIsEqual(pi, &find->item))
-            find = find->next;
-    }
     return find;
 }

@@ -242,14 +242,14 @@ static void deleteNode(TreeNode **ptr)
     {
         temp = *ptr;
         *ptr = (*ptr)->right;
-        ListEmpty(&(temp->item.petkind));
+        ListEmpty(&temp->item.petkind);
         free(temp);
     }
     else if ( (*ptr)->right == NULL)
     {
         temp = *ptr;
         *ptr = (*ptr)->left;
-        ListEmpty(&(temp->item.petkind));
+        ListEmpty(&temp->item.petkind);
         free(temp);
     }
     else            /* deleted node has two children                */
